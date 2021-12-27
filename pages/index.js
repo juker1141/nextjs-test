@@ -1,8 +1,12 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import { updateName } from '../redux/actions';
+import { connect } from 'react-redux';
+import Web3 from 'web3';
+import Web3EthContract from "web3-eth-contract";
 
-export default function Home() {
+function Home(props) {
   return (
     <div className={styles.container}>
       <Head>
@@ -15,7 +19,8 @@ export default function Home() {
         <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
-
+        {props.name}
+        <button onClick={() => {props.updateName('balao')}} type="button">click</button>
         <p className={styles.description}>
           Get started by editing{' '}
           <code className={styles.code}>pages/index.js</code>
@@ -67,3 +72,11 @@ export default function Home() {
     </div>
   )
 }
+
+const mapStateToProps = (state) => {
+  return {
+    name: state.name
+  }
+}
+
+export default connect(mapStateToProps, {updateName})(Home);
